@@ -36,7 +36,7 @@ def getAvg(deviceID):
     conn = engine.connect()
     metadata = MetaData()
 
-    sql = "select COUNT(value) from temprature where deviceName = '{}'".format(deviceID)
+    sql = "select avg(value) from temprature where deviceName = '{}'".format(deviceID)
  #   print (sql)
     res = conn.execute(sql).fetchall()
 
