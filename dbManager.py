@@ -29,6 +29,19 @@ def insertGyroData(data):
 
     return conn.execute(ins)
 
+def insertGPSData(data):
+    dbstring = 'sqlite:///somedb.sqlite'
+    engine = create_engine(dbstring)
+    conn = engine.connect()
+    metadata = MetaData()
+
+    devi = Table('gps' , metadata , autoload=True , autoload_with = engine)
+
+    ins  = devi.insert().values(deviceName=data['deviceName'] , lon=data['lon'] , lat=data['lat'])
+    ins.compile().params
+
+    return conn.execute(ins)    
+
 
 def getAvg(deviceID):
     dbstring = 'sqlite:///somedb.sqlite'

@@ -18,17 +18,23 @@ def storeTemprature(deviceName , temprature ):
     dbManager.insertInDevice(data)
     return "{} {} saved in edge".format(deviceName , temprature )
 
-
-@app.route('/get/temprature/mean/<deviceName>')
-def getMean(deviceName):
-    mean = dbManager.getAvg(deviceName)
-    return "{} mean is {} ".format(deviceName , mean)    
-
 @app.route('/push/<deviceName>/<Gx>/<Gy>/<Gz>')
 def storeGyro(deviceName , Gx , Gy ,Gz):
     data = {'deviceName' : deviceName , 'Gx': Gx , 'Gy' : Gy , 'Gz' : Gz }
     dbManager.insertGyroData(data)
     return "{} {} {} {} saved in edge".format(deviceName , Gx , Gy , Gz )
+
+@app.route('/push/<deviceName>/<lon>/<lat>')
+def storeGPS(deviceName  , lon , lat):
+    data = {'deviceName' : deviceName , 'lon': lon , 'lat' : lat  }
+    dbManager.insertGPSData(data)
+    return "{} {} {} saved in edge".format(deviceName , lon , lat )    
+
+@app.route('/get/temprature/mean/<deviceName>')
+def getMean(deviceName):
+    mean = dbManager.getAvg(deviceName)
+    return "Avg  is {} ".format( mean)    
+
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
